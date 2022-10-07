@@ -27,6 +27,10 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsTable saveNews(NewsTable news) {
+        Optional<NewsTable> newsTable = newsTableRepository.findById(news.getCategoryId());
+        if(newsTable.isPresent()){
+            news.setCategoryId(news.getNewsId());
+        }
         LocationTable location = locationTableRepository.findById(news.getLocation().getLocationId()).get();
         if(location != null){
             news.setLocation(location);
